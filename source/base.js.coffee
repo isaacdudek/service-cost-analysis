@@ -1,7 +1,7 @@
 (exports ? this).Base ?= {}
 
 Base.getCostsForProjects = (unitsPerProject, getCostForProjects) ->
-  costsForProjects = for numberOfProjects in [1..20]
+  costsForProjects = for numberOfProjects in [0..20]
     costForProjects = getCostForProjects(numberOfProjects * unitsPerProject)
     costForProjects = 0 unless costForProjects? and costForProjects > 0
     costForProjects
