@@ -25,6 +25,29 @@ ProjectManagement.Asana = (->
 `function AsanaMetadata() { return ProjectManagement.Asana.getMetadata(); }`
 `function AsanaCostsForProjects(baseMembers, membersPerProject) { return ProjectManagement.Asana.getCostsForProjects(baseMembers, membersPerProject); }`
 
+ProjectManagement.PivotalTracker = (->
+  metadata =
+    category: 'Project Management'
+    service:  'Pivotal Tracker'
+    unit:     'Private Project'
+    url:      'http://www.pivotaltracker.com/why-tracker/pricing'
+    updated:  '2014-10-15'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (basePrivateProjects, privateProjectsPerProject) ->
+    Base.getCostsForProjects privateProjectsPerProject, (privateProjects) ->
+      privateProjects += basePrivateProjects
+
+      if      privateProjects <=  5 then  7
+      else if privateProjects <= 10 then 18
+      else if privateProjects >  10 then 50
+)()
+
+`function PivotalTrackerMetadata() { return ProjectManagement.PivotalTracker.getMetadata(); }`
+`function PivotalTrackerCostsForProjects(basePrivateProjects, privateProjectsPerProject) { return ProjectManagement.PivotalTracker.getCostsForProjects(basePrivateProjects, privateProjectsPerProject); }`
+
 ProjectManagement.Waffle = (->
   metadata =
     category: 'Project Management'
