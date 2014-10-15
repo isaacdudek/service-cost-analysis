@@ -45,3 +45,27 @@ ExceptionMonitoring.Bugsnag = (->
 
 `function BugsnagMetadata() { return ExceptionMonitoring.Bugsnag.getMetadata(); }`
 `function BugsnagCostsForProjects(baseProjects, projectsPerProject) { return ExceptionMonitoring.Bugsnag.getCostsForProjects(baseProjects, projectsPerProject); }`
+
+ExceptionMonitoring.Honeybadger = (->
+  metadata =
+    category: 'Exception Monitoring'
+    service:  'Honeybadger'
+    unit:     'Application'
+    url:      'https://www.honeybadger.io/pages/plans'
+    updated:  '2014-10-15'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseApplications, applicationsPerProject) ->
+    Base.getCostsForProjects applicationsPerProject, (applications) ->
+      applications += baseApplications
+
+      if      applications <=  2 then  29
+      else if applications <=  5 then  49
+      else if applications <= 10 then  89
+      else if applications <= 50 then 249
+)()
+
+`function HoneybadgerMetadata() { return ExceptionMonitoring.Honeybadger.getMetadata(); }`
+`function HoneybadgerCostsForProjects(baseApplications, applicationsPerProject) { return ExceptionMonitoring.Honeybadger.getCostsForProjects(baseApplications, applicationsPerProject); }`
