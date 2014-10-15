@@ -13,3 +13,6 @@ Base.getLabels = (unitsPerProject) ->
     units
 
 `function Labels(unitsPerProject) { return Base.getLabels(unitsPerProject); }`
+
+Base.getMetadata = (metadata) ->
+  [[metadata.category, metadata.service, metadata.unit]]
