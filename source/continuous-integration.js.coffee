@@ -21,3 +21,26 @@ ContinuousIntegration.CircleCI = (->
 
 `function CircleCIMetadata() { return ContinuousIntegration.CircleCI.getMetadata(); }`
 `function CircleCICostsForProjects(baseContainers, containersPerProject) { return ContinuousIntegration.CircleCI.getCostsForProjects(baseContainers, containersPerProject); }`
+
+ContinuousIntegration.TravisCI = (->
+  metadata =
+    category: 'Continuous Integration'
+    service:  'Travis CI'
+    unit:     'Concurrent Job'
+    url:      'https://travis-ci.com/plans'
+    updated:  '2014-10-15'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseConcurrentJobs, concurrentJobsPerProject) ->
+    Base.getCostsForProjects concurrentJobsPerProject, (concurrentJobs) ->
+      concurrentJobs += baseConcurrentJobs
+
+      if      concurrentJobs <=  2 then 129
+      else if concurrentJobs <=  5 then 249
+      else if concurrentJobs <= 10 then 489
+)()
+
+`function TravisCIMetadata() { return ContinuousIntegration.TravisCI.getMetadata(); }`
+`function TravisCICostsForProjects(baseConcurrentJobs, concurrentJobsPerProject) { return ContinuousIntegration.TravisCI.getCostsForProjects(baseConcurrentJobs, concurrentJobsPerProject); }`
