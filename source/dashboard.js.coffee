@@ -44,3 +44,22 @@ Dashboard.Geckoboard = (->
 
 `function GeckoboardMetadata() { return Dashboard.Geckoboard.getMetadata(); }`
 `function GeckoboardCostsForProjects(baseDashboards, dashboardsPerProject) { return Dashboard.Geckoboard.getCostsForProjects(baseDashboards, dashboardsPerProject); }`
+
+Dashboard.StatusBoard = (->
+  metadata =
+    category: 'Dashboard'
+    service:  'Status Board'
+    unit:     'N/A'
+    url:      'http://panic.com/statusboard/'
+    updated:  '2014-10-16'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseUnits, unitsPerProject) ->
+    Base.getCostsForProjects unitsPerProject, (units) ->
+      0
+)()
+
+`function StatusBoardMetadata() { return Dashboard.StatusBoard.getMetadata(); }`
+`function StatusBoardCostsForProjects(baseUnits, unitsPerProject) { return Dashboard.StatusBoard.getCostsForProjects(baseUnits, unitsPerProject); }`
