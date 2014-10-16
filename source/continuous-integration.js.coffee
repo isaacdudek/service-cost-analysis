@@ -22,6 +22,28 @@ ContinuousIntegration.CircleCI = (->
 `function CircleCIMetadata() { return ContinuousIntegration.CircleCI.getMetadata(); }`
 `function CircleCICostsForProjects(baseContainers, containersPerProject) { return ContinuousIntegration.CircleCI.getCostsForProjects(baseContainers, containersPerProject); }`
 
+ContinuousIntegration.Codeship = (->
+  metadata =
+    category: 'Continuous Integration'
+    service:  'Codeship'
+    unit:     'Concurrent Build'
+    url:      'https://codeship.io/pricing'
+    updated:  '2014-10-15'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseConcurrentBuilds, concurrentBuildsPerProject) ->
+    Base.getCostsForProjects concurrentBuildsPerProject, (concurrentBuilds) ->
+      concurrentBuilds += baseConcurrentBuilds
+
+      if      concurrentBuilds <= 1 then  49
+      else if concurrentBuilds <= 3 then 149
+)()
+
+`function CodeshipMetadata() { return ContinuousIntegration.Codeship.getMetadata(); }`
+`function CodeshipCostsForProjects(baseConcurrentBuilds, concurrentBuildsPerProject) { return ContinuousIntegration.Codeship.getCostsForProjects(baseConcurrentBuilds, concurrentBuildsPerProject); }`
+
 ContinuousIntegration.TravisCI = (->
   metadata =
     category: 'Continuous Integration'
