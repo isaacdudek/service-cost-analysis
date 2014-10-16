@@ -69,3 +69,28 @@ ExceptionMonitoring.Honeybadger = (->
 
 `function HoneybadgerMetadata() { return ExceptionMonitoring.Honeybadger.getMetadata(); }`
 `function HoneybadgerCostsForProjects(baseApplications, applicationsPerProject) { return ExceptionMonitoring.Honeybadger.getCostsForProjects(baseApplications, applicationsPerProject); }`
+
+ExceptionMonitoring.Sentry = (->
+  metadata =
+    category: 'Exception Monitoring'
+    service:  'Sentry'
+    unit:     'Events / Day'
+    url:      'https://www.getsentry.com/pricing/'
+    updated:  '2014-10-16'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseEventsPerDay, eventsPerDayPerProject) ->
+    Base.getCostsForProjects eventsPerDayPerProject, (eventsPerDay) ->
+      eventsPerDay += baseEventsPerDay
+
+      if      eventsPerDay <= 250           then   0
+      else if eventsPerDay <=  10 * 60 * 24 then   9
+      else if eventsPerDay <=  25 * 60 * 24 then  24
+      else if eventsPerDay <=  50 * 60 * 24 then  79
+      else if eventsPerDay <= 200 * 60 * 24 then 199
+)()
+
+`function SentryMetadata() { return ExceptionMonitoring.Sentry.getMetadata(); }`
+`function SentryCostsForProjects(baseEventsPerDay, eventsPerDayPerProject) { return ExceptionMonitoring.Sentry.getCostsForProjects(baseEventsPerDay, eventsPerDayPerProject); }`
