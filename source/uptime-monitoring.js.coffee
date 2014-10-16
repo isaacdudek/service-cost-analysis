@@ -1,5 +1,30 @@
 (exports ? this).UptimeMonitoring ?= {}
 
+UptimeMonitoring.Panopta = (->
+  metadata =
+    category: 'Uptime Monitoring'
+    service:  'Panopta'
+    unit:     'Network Check'
+    url:      'http://www.panopta.com/pricing/'
+    updated:  '2014-10-15'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseNetworkChecks, networkChecksPerProject) ->
+    Base.getCostsForProjects networkChecksPerProject, (networkChecks) ->
+      networkChecks += baseNetworkChecks
+
+      if      networkChecks <=   5 then   8
+      else if networkChecks <=  10 then  19
+      else if networkChecks <=  25 then  39
+      else if networkChecks <=  50 then  99
+      else if networkChecks <= 150 then 249
+)()
+
+`function PanoptaMetadata() { return UptimeMonitoring.Panopta.getMetadata(); }`
+`function PanoptaCostsForProjects(baseNetworkChecks, networkChecksPerProject) { return UptimeMonitoring.Panopta.getCostsForProjects(baseNetworkChecks, networkChecksPerProject); }`
+
 UptimeMonitoring.Pingdom = (->
   metadata =
     category: 'Uptime Monitoring'
