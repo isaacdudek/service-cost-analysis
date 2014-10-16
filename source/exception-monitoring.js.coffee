@@ -70,6 +70,32 @@ ExceptionMonitoring.Honeybadger = (->
 `function HoneybadgerMetadata() { return ExceptionMonitoring.Honeybadger.getMetadata(); }`
 `function HoneybadgerCostsForProjects(baseApplications, applicationsPerProject) { return ExceptionMonitoring.Honeybadger.getCostsForProjects(baseApplications, applicationsPerProject); }`
 
+ExceptionMonitoring.Rollbar = (->
+  metadata =
+    category: 'Exception Monitoring'
+    service:  'Rollbar'
+    unit:     'Included Occurrences / Day'
+    url:      'https://rollbar.com/pricing/'
+    updated:  '2014-10-16'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseIncludedOccurrencesPerDay, includedOccurrencesPerDayPerProject) ->
+    Base.getCostsForProjects includedOccurrencesPerDayPerProject, (includedOccurrencesPerDay) ->
+      includedOccurrencesPerDay += baseIncludedOccurrencesPerDay
+
+      if      includedOccurrencesPerDay <=     3000 / 30 then    0
+      else if includedOccurrencesPerDay <=    40000 / 30 then   12
+      else if includedOccurrencesPerDay <=   200000 / 30 then   49
+      else if includedOccurrencesPerDay <=   750000 / 30 then  149
+      else if includedOccurrencesPerDay <=  3500000 / 30 then  499
+      else if includedOccurrencesPerDay <= 10000000 / 30 then 1249
+)()
+
+`function RollbarMetadata() { return ExceptionMonitoring.Rollbar.getMetadata(); }`
+`function RollbarCostsForProjects(baseIncludedOccurrencesPerDay, includedOccurrencesPerDayPerProject) { return ExceptionMonitoring.Rollbar.getCostsForProjects(baseIncludedOccurrencesPerDay, includedOccurrencesPerDayPerProject); }`
+
 ExceptionMonitoring.Sentry = (->
   metadata =
     category: 'Exception Monitoring'
