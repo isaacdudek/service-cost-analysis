@@ -1,5 +1,24 @@
 (exports ? this).StatusPage ?= {}
 
+StatusPage.StatusHub = (->
+  metadata =
+    category: 'Status Page'
+    service:  'StatusHub'
+    unit:     'N/A'
+    url:      'http://statushub.io/pricing'
+    updated:  '2014-10-16'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseUnits, unitsPerProject) ->
+    Base.getCostsForProjects unitsPerProject, (units) ->
+      49
+)()
+
+`function StatusHubMetadata() { return StatusPage.StatusHub.getMetadata(); }`
+`function StatusHubCostsForProjects(baseUnits, unitsPerProject) { return StatusPage.StatusHub.getCostsForProjects(baseUnits, unitsPerProject); }`
+
 StatusPage.StatusPageIO = (->
   metadata =
     category: 'Status Page'
