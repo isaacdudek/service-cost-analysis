@@ -19,6 +19,29 @@ StatusPage.StatusHub = (->
 `function StatusHubMetadata() { return StatusPage.StatusHub.getMetadata(); }`
 `function StatusHubCostsForProjects(baseUnits, unitsPerProject) { return StatusPage.StatusHub.getCostsForProjects(baseUnits, unitsPerProject); }`
 
+StatusPage.StatusIO = (->
+  metadata =
+    category: 'Status Page'
+    service:  'Status.io'
+    unit:     'Subscriber'
+    url:      'https://status.io/pricing'
+    updated:  '2014-10-16'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseSubscribers, subscribersPerProject) ->
+    Base.getCostsForProjects subscribersPerProject, (subscribers) ->
+      subscribers += baseSubscribers
+
+      if      subscribers <=   500 then  36
+      else if subscribers <=  2500 then  59
+      else if subscribers <= 15000 then 199
+)()
+
+`function StatusIOMetadata() { return StatusPage.StatusIO.getMetadata(); }`
+`function StatusIOCostsForProjects(baseSubscribers, subscribersPerProject) { return StatusPage.StatusIO.getCostsForProjects(baseSubscribers, subscribersPerProject); }`
+
 StatusPage.StatusPageIO = (->
   metadata =
     category: 'Status Page'
