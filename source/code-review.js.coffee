@@ -67,6 +67,27 @@ CodeReview.CodeClimate = (->
 `function CodeClimateMetadata() { return CodeReview.CodeClimate.getMetadata(); }`
 `function CodeClimateCostsForProjects(baseGitRepositories, gitRepositoriesPerProject) { return CodeReview.CodeClimate.getCostsForProjects(baseGitRepositories, gitRepositoriesPerProject); }`
 
+CodeReview.Hound = (->
+  metadata =
+    category: 'Code Review'
+    service:  'Hound'
+    unit:     'Private Repository'
+    url:      'https://houndci.com/'
+    updated:  '2014-10-18'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (basePrivateRepositories, privateRepositoriesPerProject) ->
+    Base.getCostsForProjects privateRepositoriesPerProject, (privateRepositories) ->
+      privateRepositories += basePrivateRepositories
+
+      privateRepositories * 12
+)()
+
+`function HoundMetadata() { return CodeReview.Hound.getMetadata(); }`
+`function HoundCostsForProjects(basePrivateRepositories, privateRepositoriesPerProject) { return CodeReview.Hound.getCostsForProjects(basePrivateRepositories, privateRepositoriesPerProject); }`
+
 CodeReview.PullReview = (->
   metadata =
     category: 'Code Review'
