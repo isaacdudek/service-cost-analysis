@@ -22,3 +22,22 @@ CodeReview.CodeClimate = (->
 
 `function CodeClimateMetadata() { return CodeReview.CodeClimate.getMetadata(); }`
 `function CodeClimateCostsForProjects(baseGitRepositories, gitRepositoriesPerProject) { return CodeReview.CodeClimate.getCostsForProjects(baseGitRepositories, gitRepositoriesPerProject); }`
+
+CodeReview.PullReview = (->
+  metadata =
+    category: 'Code Review'
+    service:  'PullReview'
+    unit:     'N/A'
+    url:      'https://www.pullreview.com/site/plans'
+    updated:  '2014-10-17'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseUnits, unitsPerProject) ->
+    Base.getCostsForProjects unitsPerProject, (units) ->
+      25.52
+)()
+
+`function PullReviewMetadata() { return CodeReview.PullReview.getMetadata(); }`
+`function PullReviewCostsForProjects(baseUnits, unitsPerProject) { return CodeReview.PullReview.getCostsForProjects(baseUnits, unitsPerProject); }`
