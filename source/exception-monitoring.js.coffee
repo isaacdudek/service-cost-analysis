@@ -70,6 +70,30 @@ ExceptionMonitoring.Honeybadger = (->
 `function HoneybadgerMetadata() { return ExceptionMonitoring.Honeybadger.getMetadata(); }`
 `function HoneybadgerCostsForProjects(baseApplications, applicationsPerProject) { return ExceptionMonitoring.Honeybadger.getCostsForProjects(baseApplications, applicationsPerProject); }`
 
+ExceptionMonitoring.Raygun = (->
+  metadata =
+    category: 'Exception Monitoring'
+    service:  'Raygun'
+    unit:     'Application'
+    url:      'https://raygun.io/pricing'
+    updated:  '2014-10-18'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseApplications, applicationsPerProject) ->
+    Base.getCostsForProjects applicationsPerProject, (applications) ->
+      applications += baseApplications
+
+      if      applications <=  1 then  29
+      if      applications <=  5 then  49
+      else if applications <= 20 then 149
+      else if applications <= 50 then 499
+)()
+
+`function RaygunMetadata() { return ExceptionMonitoring.Raygun.getMetadata(); }`
+`function RaygunCostsForProjects(baseApplications, applicationsPerProject) { return ExceptionMonitoring.Raygun.getCostsForProjects(baseApplications, applicationsPerProject); }`
+
 ExceptionMonitoring.Rollbar = (->
   metadata =
     category: 'Exception Monitoring'
