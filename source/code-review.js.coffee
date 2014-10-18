@@ -1,5 +1,28 @@
 (exports ? this).CodeReview ?= {}
 
+CodeReview.Codacy = (->
+  metadata =
+    category: 'Code Review'
+    service:  'Codacy'
+    unit:     'User'
+    url:      'https://www.codacy.com/pricing'
+    updated:  '2014-10-17'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseUsers, usersPerProject) ->
+    Base.getCostsForProjects usersPerProject, (users) ->
+      users += baseUsers
+
+      if      users <=  1 then  15
+      else if users <=  5 then  50
+      else if users <= 25 then 150
+)()
+
+`function CodacyMetadata() { return CodeReview.Codacy.getMetadata(); }`
+`function CodacyCostsForProjects(baseUsers, usersPerProject) { return CodeReview.Codacy.getCostsForProjects(baseUsers, usersPerProject); }`
+
 CodeReview.Codebrag = (->
   metadata =
     category: 'Code Review'
