@@ -1,5 +1,26 @@
 (exports ? this).CodeReview ?= {}
 
+CodeReview.Codebrag = (->
+  metadata =
+    category: 'Code Review'
+    service:  'Codebrag'
+    unit:     'User'
+    url:      'http://codebrag.com/pricing.html'
+    updated:  '2014-10-17'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseUsers, usersPerProject) ->
+    Base.getCostsForProjects usersPerProject, (users) ->
+      users += baseUsers
+
+      users * 3
+)()
+
+`function CodebragMetadata() { return CodeReview.Codebrag.getMetadata(); }`
+`function CodebragCostsForProjects(baseUsers, usersPerProject) { return CodeReview.Codebrag.getCostsForProjects(baseUsers, usersPerProject); }`
+
 CodeReview.CodeClimate = (->
   metadata =
     category: 'Code Review'
