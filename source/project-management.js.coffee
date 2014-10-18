@@ -48,6 +48,28 @@ ProjectManagement.PivotalTracker = (->
 `function PivotalTrackerMetadata() { return ProjectManagement.PivotalTracker.getMetadata(); }`
 `function PivotalTrackerCostsForProjects(basePrivateProjects, privateProjectsPerProject) { return ProjectManagement.PivotalTracker.getCostsForProjects(basePrivateProjects, privateProjectsPerProject); }`
 
+ProjectManagement.Sprintly = (->
+  metadata =
+    category: 'Project Management'
+    service:  'Sprintly'
+    unit:     'Project'
+    url:      'http://sprint.ly/pricing/'
+    updated:  '2014-10-18'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseProjects, projectsPerProject) ->
+    Base.getCostsForProjects projectsPerProject, (projects) ->
+      projects += baseProjects
+
+      if      projects <= 1 then 10
+      else if projects >  1 then 19
+)()
+
+`function SprintlyMetadata() { return ProjectManagement.Sprintly.getMetadata(); }`
+`function SprintlyCostsForProjects(baseProjects, projectsPerProject) { return ProjectManagement.Sprintly.getCostsForProjects(baseProjects, projectsPerProject); }`
+
 ProjectManagement.Waffle = (->
   metadata =
     category: 'Project Management'
