@@ -85,3 +85,26 @@ CodeReview.PullReview = (->
 
 `function PullReviewMetadata() { return CodeReview.PullReview.getMetadata(); }`
 `function PullReviewCostsForProjects(baseUnits, unitsPerProject) { return CodeReview.PullReview.getCostsForProjects(baseUnits, unitsPerProject); }`
+
+CodeReview.Scrutinizer = (->
+  metadata =
+    category: 'Code Review'
+    service:  'Scrutinizer'
+    unit:     'Repository'
+    url:      'https://scrutinizer-ci.com/pricing'
+    updated:  '2014-10-18'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseRepositories, repositoriesPerProject) ->
+    Base.getCostsForProjects repositoriesPerProject, (repositories) ->
+      repositories += baseRepositories
+
+      if      repositories <=  1 then  24.24
+      else if repositories <= 10 then  62.52
+      else if repositories >  10 then 190.13
+)()
+
+`function ScrutinizerMetadata() { return CodeReview.Scrutinizer.getMetadata(); }`
+`function ScrutinizerCostsForProjects(baseRepositories, repositoriesPerProject) { return CodeReview.Scrutinizer.getCostsForProjects(baseRepositories, repositoriesPerProject); }`
