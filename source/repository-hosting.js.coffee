@@ -25,3 +25,29 @@ RepositoryHosting.Bitbucket = (->
 
 `function BitbucketMetadata() { return RepositoryHosting.Bitbucket.getMetadata(); }`
 `function BitbucketCostsForProjects(baseUsers, usersPerProject) { return RepositoryHosting.Bitbucket.getCostsForProjects(baseUsers, usersPerProject); }`
+
+RepositoryHosting.Codebase = (->
+  metadata =
+    category: 'Repository Hosting'
+    service:  'Codebase'
+    unit:     'Active Project'
+    url:      'https://www.codebasehq.com/packages'
+    updated:  '2014-10-19'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseActiveProjects, activeProjectsPerProject) ->
+    Base.getCostsForProjects activeProjectsPerProject, (activeProjects) ->
+      activeProjects += baseActiveProjects
+
+      if      activeProjects <=   1 then   0.00
+      else if activeProjects <=   3 then   8.08
+      else if activeProjects <=  15 then  21.00
+      else if activeProjects <=  30 then  33.92
+      else if activeProjects <=  60 then  64.60
+      else if activeProjects <= 140 then 153.43
+)()
+
+`function CodebaseMetadata() { return RepositoryHosting.Codebase.getMetadata(); }`
+`function CodebaseCostsForProjects(baseActiveProjects, activeProjectsPerProject) { return RepositoryHosting.Codebase.getCostsForProjects(baseActiveProjects, activeProjectsPerProject); }`
