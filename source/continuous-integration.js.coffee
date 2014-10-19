@@ -44,6 +44,25 @@ ContinuousIntegration.Codeship = (->
 `function CodeshipMetadata() { return ContinuousIntegration.Codeship.getMetadata(); }`
 `function CodeshipCostsForProjects(baseConcurrentBuilds, concurrentBuildsPerProject) { return ContinuousIntegration.Codeship.getCostsForProjects(baseConcurrentBuilds, concurrentBuildsPerProject); }`
 
+ContinuousIntegration.MagnumCI = (->
+  metadata =
+    category: 'Continuous Integration'
+    service:  'Magnum CI'
+    unit:     'N/A'
+    url:      'https://magnum-ci.com/pricing'
+    updated:  '2014-10-19'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseUnits, unitsPerProject) ->
+    Base.getCostsForProjects unitsPerProject, (units) ->
+      0
+)()
+
+`function MagnumCIMetadata() { return ContinuousIntegration.MagnumCI.getMetadata(); }`
+`function MagnumCICostsForProjects(baseUnits, unitsPerProject) { return ContinuousIntegration.MagnumCI.getCostsForProjects(baseUnits, unitsPerProject); }`
+
 ContinuousIntegration.TravisCI = (->
   metadata =
     category: 'Continuous Integration'
