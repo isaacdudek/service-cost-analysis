@@ -1,5 +1,31 @@
 (exports ? this).RepositoryHosting ?= {}
 
+RepositoryHosting.Beanstalk = (->
+  metadata =
+    category: 'Repository Hosting'
+    service:  'Beanstalk'
+    unit:     'Repository'
+    url:      'http://beanstalkapp.com/pricing'
+    updated:  '2014-10-19'
+
+  getMetadata: ->
+    Base.getMetadata metadata
+
+  getCostsForProjects: (baseRepositories, repositoriesPerProject) ->
+    Base.getCostsForProjects repositoriesPerProject, (repositories) ->
+      repositories += baseRepositories
+
+      if      repositories <=   1 then   0
+      else if repositories <=  10 then  15
+      else if repositories <=  25 then  25
+      else if repositories <=  50 then  50
+      else if repositories <= 120 then 100
+      else if repositories <= 300 then 200
+)()
+
+`function BeanstalkMetadata() { return RepositoryHosting.Beanstalk.getMetadata(); }`
+`function BeanstalkCostsForProjects(baseRepositories, repositoriesPerProject) { return RepositoryHosting.Beanstalk.getCostsForProjects(baseRepositories, repositoriesPerProject); }`
+
 RepositoryHosting.Bitbucket = (->
   metadata =
     category: 'Repository Hosting'
