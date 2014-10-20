@@ -25,6 +25,31 @@ ProjectManagement.Asana = (->
 `function AsanaMetadata() { return ProjectManagement.Asana.getMetadata(); }`
 `function AsanaCostsForProjects(baseMembers, membersPerProject) { return ProjectManagement.Asana.getCostsForProjects(baseMembers, membersPerProject); }`
 
+ProjectManagement.HuBoard = (->
+  metadata =
+    category: 'Project Management'
+    service:  'HuBoard'
+    unit:     'Private Repository'
+    url:      'https://huboard.com/pricing'
+    updated:  '2014-10-20'
+
+  getMetadata: (type) ->
+    Base.getMetadata metadata, type
+
+  getCostsForProjects: (type, basePrivateRepositories, privateRepositoriesPerProject) ->
+    Base.getCostsForProjects privateRepositoriesPerProject, (privateRepositories) ->
+      privateRepositories += basePrivateRepositories
+
+      switch type
+        when 'Organization'
+          if privateRepositories > 0 then 24
+        when 'User'
+          if privateRepositories > 0 then 7
+)()
+
+`function HuBoardMetadata(type) { return ProjectManagement.HuBoard.getMetadata(type); }`
+`function HuBoardCostsForProjects(type, basePrivateRepositories, privateRepositoriesPerProject) { return ProjectManagement.HuBoard.getCostsForProjects(type, basePrivateRepositories, privateRepositoriesPerProject); }`
+
 ProjectManagement.PivotalTracker = (->
   metadata =
     category: 'Project Management'
