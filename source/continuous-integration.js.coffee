@@ -63,6 +63,33 @@ ContinuousIntegration.MagnumCI = (->
 `function MagnumCIMetadata() { return ContinuousIntegration.MagnumCI.getMetadata(); }`
 `function MagnumCICostsForProjects(baseUnits, unitsPerProject) { return ContinuousIntegration.MagnumCI.getCostsForProjects(baseUnits, unitsPerProject); }`
 
+ContinuousIntegration.Semaphore = (->
+  metadata =
+    category: 'Continuous Integration'
+    service:  'Semaphore'
+    unit:     'Processor'
+    url:      'https://semaphoreapp.com/pricing'
+    updated:  '2014-10-20'
+
+  getMetadata: (type) ->
+    Base.getMetadata metadata, type
+
+  getCostsForProjects: (type, baseProcessors, processorsPerProject) ->
+    Base.getCostsForProjects processorsPerProject, (processors) ->
+      processors += baseProcessors
+
+      switch type
+        when 'Organization'
+          if      processors <= 2 then  99
+          else if processors <= 4 then 199
+        when 'Personal'
+          if      processors <= 1 then 29
+          else if processors <= 2 then 79
+)()
+
+`function SemaphoreMetadata(type) { return ContinuousIntegration.Semaphore.getMetadata(type); }`
+`function SemaphoreCostsForProjects(type, baseProcessors, processorsPerProject) { return ContinuousIntegration.Semaphore.getCostsForProjects(type, baseProcessors, processorsPerProject); }`
+
 ContinuousIntegration.TravisCI = (->
   metadata =
     category: 'Continuous Integration'
