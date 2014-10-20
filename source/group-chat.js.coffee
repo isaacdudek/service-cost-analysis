@@ -21,3 +21,28 @@ GroupChat.Flowdock = (->
 
 `function FlowdockMetadata() { return GroupChat.Flowdock.getMetadata(); }`
 `function FlowdockCostsForProjects(baseUsers, usersPerProject) { return GroupChat.Flowdock.getCostsForProjects(baseUsers, usersPerProject); }`
+
+GroupChat.HipChat = (->
+  metadata =
+    category: 'Group Chat'
+    service:  'HipChat'
+    unit:     'User'
+    url:      'https://www.hipchat.com/pricing'
+    updated:  '2014-10-20'
+
+  getMetadata: (type) ->
+    Base.getMetadata metadata, type
+
+  getCostsForProjects: (type, baseUsers, usersPerProject) ->
+    Base.getCostsForProjects usersPerProject, (users) ->
+      users += baseUsers
+
+      switch type
+        when 'Basic'
+          0
+        when 'Plus'
+          users * 2
+)()
+
+`function HipChatMetadata(type) { return GroupChat.HipChat.getMetadata(type); }`
+`function HipChatCostsForProjects(type, baseUsers, usersPerProject) { return GroupChat.HipChat.getCostsForProjects(type, baseUsers, usersPerProject); }`
