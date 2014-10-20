@@ -95,6 +95,31 @@ ProjectManagement.Sprintly = (->
 `function SprintlyMetadata() { return ProjectManagement.Sprintly.getMetadata(); }`
 `function SprintlyCostsForProjects(baseProjects, projectsPerProject) { return ProjectManagement.Sprintly.getCostsForProjects(baseProjects, projectsPerProject); }`
 
+ProjectManagement.Trello = (->
+  metadata =
+    category: 'Project Management'
+    service:  'Trello'
+    unit:     'User'
+    url:      'https://trello.com/'
+    updated:  '2014-10-20'
+
+  getMetadata: (type) ->
+    Base.getMetadata metadata, type
+
+  getCostsForProjects: (type, baseUsers, usersPerProject) ->
+    Base.getCostsForProjects usersPerProject, (users) ->
+      users += baseUsers
+
+      switch type
+        when 'Business Class'
+          users * 5
+        when 'Standard'
+          0
+)()
+
+`function TrelloMetadata(type) { return ProjectManagement.Trello.getMetadata(type); }`
+`function TrelloCostsForProjects(type, baseUsers, usersPerProject) { return ProjectManagement.Trello.getCostsForProjects(type, baseUsers, usersPerProject); }`
+
 ProjectManagement.Waffle = (->
   metadata =
     category: 'Project Management'
