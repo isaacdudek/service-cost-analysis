@@ -14,5 +14,11 @@ Base.getLabels = (unitsPerProject) ->
 
 `function Labels(unitsPerProject) { return Base.getLabels(unitsPerProject); }`
 
-Base.getMetadata = (metadata) ->
-  [[metadata.category, metadata.service, metadata.unit]]
+Base.getMetadata = (metadata, type) ->
+  category = metadata.category
+  service = metadata.service
+  unit = metadata.unit
+
+  service += " (#{type})" if type?
+
+  [[category, service, unit]]
