@@ -46,3 +46,30 @@ GroupChat.HipChat = (->
 
 `function HipChatMetadata(type) { return GroupChat.HipChat.getMetadata(type); }`
 `function HipChatCostsForProjects(type, baseUsers, usersPerProject) { return GroupChat.HipChat.getCostsForProjects(type, baseUsers, usersPerProject); }`
+
+GroupChat.Slack = (->
+  metadata =
+    category: 'Group Chat'
+    service:  'Slack'
+    unit:     'User'
+    url:      'https://slack.com/pricing'
+    updated:  '2014-10-20'
+
+  getMetadata: (type) ->
+    Base.getMetadata metadata, type
+
+  getCostsForProjects: (type, baseUsers, usersPerProject) ->
+    Base.getCostsForProjects usersPerProject, (users) ->
+      users += baseUsers
+
+      switch type
+        when 'Lite'
+          0
+        when 'Plus'
+          users * 15
+        when 'Standard'
+          users * 8
+)()
+
+`function SlackMetadata(type) { return GroupChat.Slack.getMetadata(type); }`
+`function SlackCostsForProjects(type, baseUsers, usersPerProject) { return GroupChat.Slack.getCostsForProjects(type, baseUsers, usersPerProject); }`
