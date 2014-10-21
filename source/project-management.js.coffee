@@ -78,7 +78,7 @@ ProjectManagement.Sprintly = (->
     category: 'Project Management'
     service:  'Sprintly'
     unit:     'Project'
-    url:      'http://sprint.ly/pricing/'
+    url:      'https://sprint.ly/pricing/'
     updated:  '2014-10-18'
 
   getMetadata: ->

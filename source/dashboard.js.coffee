@@ -50,7 +50,7 @@ Dashboard.StatusBoard = (->
     category: 'Dashboard'
     service:  'Status Board'
     unit:     'N/A'
-    url:      'http://panic.com/statusboard/'
+    url:      'https://panic.com/statusboard/'
     updated:  '2014-10-16'
 
   getMetadata: ->

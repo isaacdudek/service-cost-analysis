@@ -5,7 +5,7 @@ StatusPage.StatusHub = (->
     category: 'Status Page'
     service:  'StatusHub'
     unit:     'N/A'
-    url:      'http://statushub.io/pricing'
+    url:      'https://statushub.io/pricing'
     updated:  '2014-10-16'
 
   getMetadata: ->

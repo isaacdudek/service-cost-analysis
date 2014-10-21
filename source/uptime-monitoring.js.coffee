@@ -5,7 +5,7 @@ UptimeMonitoring.Panopta = (->
     category: 'Uptime Monitoring'
     service:  'Panopta'
     unit:     'Network Check'
-    url:      'http://www.panopta.com/pricing/'
+    url:      'https://www.panopta.com/pricing/'
     updated:  '2014-10-15'
 
   getMetadata: ->
